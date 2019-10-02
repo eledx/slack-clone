@@ -2,198 +2,101 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 
-/* params */
-
-// channel id param
-app.param('chan_id', (req, res, next, chan_id) => {
-  //if (typeof(chan_id) == "number") {
-    req.chan_id = chan_id;
-    next();
-  /*}
-
-  else {
-    res.status(400).end();
-  }*/
-});
-
-
-// message id param
-app.param('msg_id', (req, res, next, msg_id) => {
-  //if (typeof(msg_id) == "number") {
-    req.msg_id = msg_id;
-    next();
-  /*}
-
-  else {
-    res.status(400).end();
-  }*/
-});
-
-app.param('user_id', (req, res, next, user_id) => {
-  //if (typeof(user_id) == "number") {
-    req.user_id = user_id;
-  /*}
-
-  else {
-    res.status(400).end();
-  }*/
-})
-
-
 
 /* root */
 
-app.get('/', (req, res) => {
-  res.status(400).end();
-})
+app.get('/', controller.root(req, res));
 
+
+/* params */
+
+// channel id param
+app.param('chan_id', controller.param.chan_id(req, res, next, chan_id));
+
+// message id param
+app.param('msg_id', controller.param.msg_id(req, res, next, msg_id));
+
+// user id param
+app.param('user_id', controller.param.user_id(req, res, next, user_id));
 
 
 /* /channels */
 
 // get info of all channels
-app.get('/channels', (req, res) => {
-  res.json(`vous avez demande tous les channels`);
-})
+app.get('/channels', controller.channels.get(req, res));
 
 // create a channels with param name
-app.post('/channels', (req, res) => {
-  const name = req.param.name;
-
-  if (name) {
-    res.json(`vous avez cree le channel ${name}`);
-  }
-
-  else {
-    res.status(400).end();
-  }
-})
-
+app.post('/channels', controller.channels.post(req, res));
 
 
 /* /channels/:chan_id */
 
 // get info of channel id
-app.get('/channels/:chan_id', (req, res) => {
-  res.json(`vous avez demande le channel ${req.chan_id}`);
-});
+app.get('/channels/:chan_id', controller.channels.chan_id.get(req, res));
 
 // modify channel id
-app.put('/channels/:chan_id', (req, res) => {
-  const name = req.param.name;
-
-  if (name) {
-    res.json(`vous avez modifie le channel ${chan_id}`);
-  }
-
-  else {
-    res.status(400).end();
-  }
-});
+app.put('/channels/:chan_id', controller.channels.chan_id.put(req, res));
 
 // delete channel id
-app.delete('/channels/:chan_id', (req, res) => {
-  res.json(`vous avez supprime le channel ${chan_id}`);
-});
-
+app.delete('/channels/:chan_id', controller.channels.chan_id.delete(req, res));
 
 
 /* /channels/:chan_id/messages */
 
 // get all messages from channel id
-app.get('/channels/:chan_id/messages', (req, res) => {
-  res.json(`vous avez demande tous les messages du channel ${chan_id}`);
-})
+app.get('/channels/:chan_id/messages', controller.channels.chan_id.messages.get(req, res));
 
 // create a message in channel id
-app.post('/channels/:chan_id/messages', (req, res) => {
-  msg = req.param.msg;
-
-  if (msg) {
-    res.json(`nouveau message ajoute au channel ${chan_id} : ${msg}`);
-  }
-
-  else {
-    res.status(400).end();
-  }
-})
-
+app.post('/channels/:chan_id/messages', controller.channels.chan_id.messages.post(req, res));
 
 
 /* /channels/:chan_id/messages/:msg_id */
 
 // get message id from channel id 
-app.get('/channels/:chan_id/messages/:msg_id', (req, res) => {
-  res.json(`vous avez demande le message ${msg_id}`);
-});
+app.get('/channels/:chan_id/messages/:msg_id', controller.channels.chan_id.messages.msg_id.get(req, res));
 
 // modify message if from channel id
-app.put('/channels/:chan_id/messages/:msg_id', (req, res) => {
-  const msg = req.param.msg;
-
-  if (msg) {
-    res.json(`vous avez modifier le message ${msg_id} par : ${msg}`);
-  }
-
-  else {
-    res.status(400).end();
-  }
-});
+app.put('/channels/:chan_id/messages/:msg_id', controller.channels.chan_id.messages.msg_id.put(req, res));
 
 // delete message id from channel id
-app.delete('/channels/:chan_id/messages/:msg_id', (req, res) => {
-  res.json(`vous avez supprimer le message ${msg_id}`);
-})
+app.delete('/channels/:chan_id/messages/:msg_id', controller.channels.chan_id.messages.msg_id.delete(req, res));
 
 
 
 /* /users */
 
 // get info from all users
-app.get('/users', (req, res) => {
-  res.json(`vous avez demander tous les info de tous les utilisateurs`);
-})
+app.get('/users', controller.users.get(req, res));
 
 // create a new user
-app.post('/users', (req, res) => {
-  user = req.param.user;
-
-  if (user) {
-    res.json(`nouveau utilisateur ${user} creer`);
-  }
-
-  else {
-    res.status(400).end();
-  }
-})
-
+app.post('/users', controller.users.post(req, res));
 
 
 /* /user/:user_id */
 
 // get info from user id
-app.get('/users/:user_id', (req, res) => {
-  res.json(`vous avez demander les info de l'utilisateur ${user_id}`);
-})
+app.get('/users/:user_id', controller.users.user_id.get(req, res));
 
 // modify a user id
-app.put('/users/:user_id', (req, res) => {
-  data = req.param.data;
-
-  if (data) {
-    res.json(`vous avez modifier l'utilisateur ${user_id} avec la data ${data}`);
-  }
-
-  else {
-    res.status(400).end();
-  }
-})
+app.put('/users/:user_id', controller.users.user_id.put(req, res));
 
 // delete a user
-app.delete('/users/:user_id', (req, res) => {
-  res.json(`vous avez supprimer l'utilisateur ${user_id}`);
-})
+app.delete('/users/:user_id', controller.users.user_id.delete(req, res));
 
+
+/* /user/:user_id/channels */
+
+// get channels from user id
+app.get('/users/:user_id/channels', controller.users.user_id.channels.get(req, res));
+
+// add a channel id to user id
+app.post('/users/:user_id/channels/:chan_id', controller.users.user_id.channels.post(req, res));
+
+
+/* /user/:user_id/channels/:chan_id */
+
+// delete a channel id to user id
+app.delete('/users/:user_id/channels/:chan_id', controller.users.user_id.channels.chan_id.delete(req, res));
 
 
 /* server listening */
