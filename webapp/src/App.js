@@ -1,12 +1,14 @@
 import React from 'react';
+import logo from './logo.svg';
+import Channel from './Components/Channel.js';
+import Menu from './Components/menu.js';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p></p>
-      </header>
+      <Menu />
+      <Channel />
     </div>
   );
 }
