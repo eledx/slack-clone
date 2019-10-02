@@ -4,7 +4,7 @@ function Menu() {
   return (
     <div className="App">
       <header className="App-header">
-       
+        Menu
       </header>
     </div>
   );
