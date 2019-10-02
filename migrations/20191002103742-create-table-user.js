@@ -15,15 +15,16 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.runSql(`CREATE TABLE channel(
+  return db.runSql(`CREATE TABLE app_user(
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
+    channels INTEGER ARRAY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   )`);
 };
 
 exports.down = function(db) {
-  return db.runSql(`DROP TABLE IF EXISTS channel`);
+  return db.runSql(`DROP TABLE IF EXISTS app_user`);
 };
 
 exports._meta = {
