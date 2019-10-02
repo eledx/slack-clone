@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import SplitPane from 'react-split-pane';
+import Home from './components/Home';
+import Channel from './components/Channel';
 
-function App() {
+import { Menu, ButtonMenu } from './style/styled';
+
+const styles = {
+  background: '#000',
+  width: '2px',
+  cursor: 'col-resize',
+  height: '100%',
+};
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <SplitPane
+        split="vertical"
+        minSize={150}
+        defaultSize={220}
+        resizerStyle={styles}
+      >
+        <Menu>
+          <Link to="/channels/0">
+            <ButtonMenu>Channel0</ButtonMenu>
+          </Link>
+
+          <Link to="/channels/1">
+            <ButtonMenu>Channel1 </ButtonMenu>
+          </Link>
+        </Menu>
+
+        <div>
+          <Route exact path="/" component={Home} />
+          <Route path="/channels/:id" component={Channel} />
+        </div>
+      </SplitPane>
+    </Router>
   );
 }
-
-export default App;
