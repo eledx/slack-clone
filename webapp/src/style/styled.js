@@ -1,11 +1,34 @@
 import styled from 'styled-components';
 
-export const Menu = styled.div`
+export const SideBar = styled.div`
   height: 100%;
   background-color: #3f0f40;
 `;
 
-export const ButtonMenu = styled.div`
+export const HeaderSideBar = styled.div`
+  font-size: 1.2em;
+  height: 60px;
+  width: 100%;
+  color: white;
+  background-color: #390e3a;
+`;
+
+export const MainSideBar = styled.div`
+  /* overflow-y: scroll; */
+  height: 100%;
+`;
+
+export const FooterSideBar = styled.div`
+  position: absolute;
+  bottom: 0;
+  font-size: 1.2em;
+  height: 70px;
+  width: 100%;
+  color: white;
+  background-color: #390e3a;
+`;
+
+export const ButtonSideBar = styled.div`
   padding: 10px;
   color: white;
   cursor: pointer;
@@ -35,3 +58,4 @@ export const FooterChannel = styled.div`
   bottom: 0;
   width: 100%;
 `;
+
