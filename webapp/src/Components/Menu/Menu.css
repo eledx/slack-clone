@@ -109,19 +109,19 @@ body {
   }
 
   /* Toggle class burger menu */
-  .open_close ~ ul {
+  .nav-bar .is-visible-in-mobile {
     max-height: calc(100vh - 37px);
     transition: max-height 1s;
   }
-  .open_close span:first-child {
+  .open_burger span:first-child {
     transform: rotate(45deg);
     transform-origin: left 50%;
   }
-  .open_close span:nth-child(2) {
+  .open_burger span:nth-child(2) {
     opacity: 0;
     transition: opacity 0.5s;
   }
-  .open_close span:last-child {
+  .open_burger span:last-child {
     transform: rotate(-45deg);
     transform-origin: left 50%;
   }
