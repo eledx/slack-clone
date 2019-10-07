@@ -47,7 +47,7 @@ class Channel extends React.Component {
       <div>
         <h1>{this.state.chanName}</h1>
         {this.state.messages.map(message => { 
-          return <Message content={message.content}/>
+          return <Message key={message.id} content={message.content}/>
         })}
         <PostMessage />
       </div>
