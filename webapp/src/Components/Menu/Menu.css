@@ -14,11 +14,15 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+li{
+  list-style: none;
+}
+
 .nav-bar {
   float: left;
 }
 
-.nav-bar ul {
+.nav-bar .left-navbar {
   padding: 0;
   margin: 0;
   list-style: none;
@@ -26,7 +30,10 @@ body {
   height: 100vh;
   width: 20vw;
   background: #333;
+  overflow: auto;
 }
+.left-navbar::-webkit-scrollbar { width: 0 }
+
 
 .nav-bar a {
   padding: 8px 20px;
@@ -38,10 +45,40 @@ body {
   display: block;
 }
 
-.nav-bar a:hover {
+.nav-bar a:hover, .nav-bar a:focus {
   background: #fff;
   color: #333;
 }
+
+
+.channels-list{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 2s;
+  color: #fff;
+}
+.channels-list-open li:hover, .channels-list-open li:focus {
+  background: #fff;
+  color: #333;
+}
+.channels-list-open li a{
+  cursor: pointer;
+}
+.channels-list-open{
+  max-height: 50em;
+  overflow: hidden;
+  transition: max-height 4s;
+  color: #fff;
+}
+.list-element-channels:after{
+  content: "►";
+  float: right;
+}
+.list-element-channels-open:after{
+  content: "▼";
+  float: right;
+}
+
 
 /* Burger-menu */
 .burger_button {
@@ -93,7 +130,7 @@ body {
     margin: 0;
     margin-bottom: 1px;
   }
-  .nav-bar ul {
+  .nav-bar .left-navbar {
     max-height: 0;
     transition: max-height 0.5s;
     width: auto;

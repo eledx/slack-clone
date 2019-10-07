@@ -1,0 +1,84 @@
+.form-search-bar-header {
+  margin: 20px 10px;
+}
+.form-search-bar-header input {
+  width: 100%;
+  appearance: none;
+  background: #333;
+  border: solid 1px #fff;
+  border-radius: 10px;
+  text-indent: 5px;
+}
+.form-search-bar-header input:focus {
+  color: #fff;
+  border: solid 2px #fff;
+  outline: none;
+}
+.search-form {
+  padding: 20px;
+}
+
+/* Modal button */
+.button-search-channel {
+  background: #333;
+  color: #666;
+  border: 2px solid #666;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 95%;
+}
+.search-channel-bloc {
+  text-align: center;
+}
+
+/* Modal */
+
+.modal-search-channel {
+  background: #1a1d21;
+  border: solid 2px #666;
+  color: #fff;
+  border-radius: 20px;
+}
+.channel-search-input {
+  width: 100%;
+  border: none;
+  background: #1a1d21;
+  color: #fff;
+  text-indent: 5px;
+  border: 2px solid transparent;
+}
+.channel-search-input:focus {
+  border: 2px solid #666;
+  outline: none;
+  border-radius: 5px;
+}
+.search-channel-list {
+  padding: 10px 30px;
+}
+.search-channel-list li {
+  padding: 5px 0;
+}
+.shortcuts-list {
+  padding: 10px 0;
+  background-color: #222529;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.shortcuts-list li {
+  display: inline-block;
+  padding: 5px 10px;
+}
+/* Media Queries */
+@media all and (max-width: 768px) {
+  /* Modal button */
+  .button-search-channel {
+    padding: 5px;
+  }
+}
+@media (min-width: 576px) {
+  .modal-dialog {
+    top: 5%;
+    margin: auto;
+    max-width: 80%;
+  }
+}
