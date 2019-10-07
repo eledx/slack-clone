@@ -1,6 +1,11 @@
 import React from 'react';
 import './Menu.css';
 import BurgerButton from './BurgerButton';
+import InfoHeader from './InfoHeader';
+import './InfoHeader.css';
+import SearchBar from './SearchBar';
+import './SearchBar.css';
+
 
 class Menu extends React.Component {
   // On créer un état qui (ici) est un booléen false pour le moment car un état doit changer par la suite
@@ -23,7 +28,6 @@ class Menu extends React.Component {
     });
   };
 
-
   render() {
     //   On créer une constante burgerButton qui vérifie si isOpenMenu est il est égal à true (on set la classe de la balise à 'burger_button open_burger' ) ou si égal à false (on set la classe de la balise à 'burger_button' )
     const burgerButton = this.state.isOpenMenu
@@ -31,56 +35,92 @@ class Menu extends React.Component {
       : 'burger_button';
 
     return (
-      <nav role="navigation" className="nav-bar">
-        {/* On appel le composant BurgerButton et on lui fais passer en paramètre la fonction toggleIsOpenMenu et burgerButton */}
-        <BurgerButton
-          fonction={this.toggleIsOpenMenu}
-          burgerButton={burgerButton}
-        />
-        {/* si isOpenMenu est égal à true on set la classe à 'is-visible-in-mobile' */}
-        <ul
-          className={
-            this.state.isOpenMenu
+      <div>
+        <nav role="navigation" className="nav-bar">
+          {/* On appel le composant BurgerButton et on lui fais passer en paramètre la fonction toggleIsOpenMenu et burgerButton */}
+          <BurgerButton
+            fonction={this.toggleIsOpenMenu}
+            burgerButton={burgerButton}
+          />
+          {/* si isOpenMenu est égal à true on set la classe à 'is-visible-in-mobile' */}
+          <ul
+            className={
+              this.state.isOpenMenu
               ? 'left-navbar is-visible-in-mobile'
               : 'left-navbar'
-          }
-        >
-          <li>
-            <a href="#">Accueil</a>
-          </li>
-          <li onClick={this.toggleIsOpenDropDown}>
-            <a
-              className={
-                this.state.isOpenDropDown
-                  ? 'list-element-channels-open'
-                  : 'list-element-channels'
-              }
-              href="#"
-            >
-              Channels
-            </a>
-            <ul
-              className={
-                this.state.isOpenDropDown ? 'channels-list-open' : 'channels-list'
-              }
-            >
-              <li>
-                <a>général</a>
-              </li>
-              <li>
-                <a>random</a>
-              </li>
-              <li>
-                <a>channel</a>
-              </li>
-            </ul>
-          </li>
+            }
+          >
+            <li><InfoHeader /></li>
+            <li><SearchBar/></li>
+            <li>
+              <a href="#">Accueil</a>
+            </li>
+            <li onClick={this.toggleIsOpenDropDown}>
+              <a
+                className={
+                  this.state.isOpenDropDown
+                    ? 'list-element-channels-open'
+                    : 'list-element-channels'
+                }
+                href="#"
+              >
+                Channels
+              </a>
+              <ul
+                className={
+                  this.state.isOpenDropDown
+                    ? 'channels-list-open'
+                    : 'channels-list'
+                }
+              >
+                <li>
+                  <a>général</a>
+                </li>
+                <li>
+                  <a>random</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+                <li>
+                  <a>channel</a>
+                </li>
+              </ul>
+            </li>
 
-          <li>
-            <a href="#">Private messages</a>
-          </li>
-        </ul>
-      </nav>
+            <li>
+              <a href="#">Private messages</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     );
   }
 }
