@@ -1,11 +1,11 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-require("dotenv").config();
+require('dotenv').config();
 
-app.get("/", function(req, res) {
-  res.send("Hello W!");
-});
+const routes = require('./routes');
+
+app.use('/api', routes);
 
 app.listen(8000, function() {
-  console.log("Example app listening on port 8000!");
+  console.log('Example app listening on port 8000!');
 });
