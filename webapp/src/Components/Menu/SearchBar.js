@@ -16,14 +16,14 @@ const SearchBar = () => {
       </div>
       <div>
         <div
-          class="modal fade search-modal"
-          tabindex="-1"
+          className="modal fade search-modal"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="myLargeModalLabel"
           aria-hidden="true"
         >
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content modal-search-channel">
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content modal-search-channel">
               <form className="search-form">
                 <input
                   className="channel-search-input"

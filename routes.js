@@ -1,5 +1,4 @@
 const router = require('express').Router();
-var pool = require('./db_pool.js');
 
 router.get('/', function(req, res) {
   res.send('Hello W!');
@@ -9,14 +8,14 @@ router.get('/channels', (req, res) => {
   res.json({
     channels: [
       {
-        id: 'abc',
-        name: 'general',
+        id: "abc",
+        name: "general",
       },
       {
-        id: 'def',
-        name: 'random',
-      },
-    ],
+        id: "def",
+        name: "random",
+      }
+    ]
   });
 });
 

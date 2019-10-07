@@ -3,16 +3,16 @@ import React from 'react';
 const PostMessage = () => {
   return (
     <div>
-      <div class="input-group mb-3">
+      <div className="input-group mb-3">
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           placeholder="Entrer votre message"
           aria-label="Recipient's username"
           aria-describedby="basic-addon2"
         />
-        <div class="input-group-append">
-          <button type="button" class="btn btn-success">
+        <div className="input-group-append">
+          <button type="button" className="btn btn-success">
             Envoyer !
           </button>
         </div>

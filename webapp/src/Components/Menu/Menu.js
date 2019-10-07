@@ -5,6 +5,8 @@ import InfoHeader from './InfoHeader';
 import './InfoHeader.css';
 import SearchBar from './SearchBar';
 import './SearchBar.css';
+import { Link, Route, Switch } from 'react-router-dom';
+import Channel from '../Channel'
 
 
 class Menu extends React.Component {
@@ -12,6 +14,7 @@ class Menu extends React.Component {
   state = {
     isOpenMenu: false,
     isOpenDropDown: false,
+    channels: []
   };
 
   // On créer une fonction fléchée qui aura pour objectif à son déclenchement de configuré l'état déclaré plus tôt
@@ -27,6 +30,29 @@ class Menu extends React.Component {
       isOpenDropDown: !this.state.isOpenDropDown,
     });
   };
+
+  getChanName (idChan) {
+    let res = this.state.channels.map(chan => {
+      if (chan.id === idChan) {
+        return chan.name
+      }
+    })
+    return res
+    //console.log('name', name)
+  }
+
+  async getChannels() {
+    //  await fetch('/api/channels')
+    //    .then(res => res.json())
+    //    .then(console.log('alors ?'));
+    const response = await fetch('/api/channels');
+    const { channels } = await response.json();
+    this.setState({ channels })
+    console.log('responses', channels)
+  }
+  componentDidMount() {
+    this.getChannels()
+  }
 
   render() {
     //   On créer une constante burgerButton qui vérifie si isOpenMenu est il est égal à true (on set la classe de la balise à 'burger_button open_burger' ) ou si égal à false (on set la classe de la balise à 'burger_button' )
@@ -73,45 +99,13 @@ class Menu extends React.Component {
                     : 'channels-list'
                 }
               >
-                <li>
-                  <a>général</a>
+                {this.state.channels.map(channel => (
+                  <li key={channel.id}>
+                  <Link to={`/channels/${channel.id}/messages`}>
+                    {channel.name}
+                  </Link>
                 </li>
-                <li>
-                  <a>random</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
-                <li>
-                  <a>channel</a>
-                </li>
+                ))}
               </ul>
             </li>
 
@@ -120,6 +114,14 @@ class Menu extends React.Component {
             </li>
           </ul>
         </nav>
+        <Switch>
+          <Route
+            path="/channels/:channelId/messages"
+            render={props => (
+              <Channel channelId={props.match.params.channelId} chanName={this.getChanName(props.match.params.channelId)}/>
+            )}
+          />
+        </Switch>
       </div>
     );
   }
