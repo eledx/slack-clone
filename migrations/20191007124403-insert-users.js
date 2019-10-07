@@ -15,12 +15,10 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.runSql(`INSERT INTO channel (name, is_public) VALUES
-    ('general', 'true'),
-    ('random', 'true'),
-    ('nailArtActivism', 'false'),
-    ('exoskeletonDIY', 'false'),
-    ('seaBassPhobia', 'false')
+  return db.runSql(`INSERT INTO app_user (name) VALUES
+    ('élé'),
+    ('Jessy'),
+    ('Etienne')
   `);
 };
 
