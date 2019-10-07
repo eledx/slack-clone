@@ -18,7 +18,6 @@ exports.up = function(db) {
   return db.runSql(`CREATE TABLE app_user(
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
-    channels INTEGER ARRAY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   )`);
 };
