@@ -1,12 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Link, Switch } from 'react-router-dom';
 import SlackIcon from '../img/slack.png';
 import SplitPane from 'react-split-pane';
 import Home from './Home';
-import ChannelPage from './ChannelPage';
-import CreateChannel from './CreateChannel'
-
-import { channels } from '../data/static';
+import ChannelPage from './MessageList';
+import CreateChannel from './CreateChannel';
+import Spinner from './Spinner';
 
 import {
   SideBar,
@@ -24,44 +23,69 @@ const styles = {
 };
 
 const SideBarNav = () => {
-  return (
-    <Router>
-      <SplitPane
-        split="vertical"
-        minSize={150}
-        defaultSize={220}
-        resizerStyle={styles}
-      >
-        <SideBar>
-          <Link to="/">
-            <HeaderSideBar className="d-flex justify-content-center align-items-center">
-              <img src={SlackIcon} alt="Slack logo" className="mr-2" />
-              Slack-Clone
-            </HeaderSideBar>
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [shouldChannel, setShouldChannel] = useState(false);
+
+  // TODO: voir si il est possible de stocker la requête
+  // et passer en parametre l'url le chargment et la data pour ne pas dupliquer
+
+  useEffect(() => {
+    fetch('/api/channels/')
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setData(data);
+        setLoading(false);
+        setShouldChannel(false)
+      });
+  }, [shouldChannel]);
+
+  return loading ? (
+    <Spinner />
+  ) : (
+    <SplitPane
+      split="vertical"
+      minSize={150}
+      defaultSize={220}
+      resizerStyle={styles}
+    >
+      <SideBar>
+        <HeaderSideBar className="d-flex justify-content-center align-items-center">
+          <Link className="text-white" to="/">
+            <img src={SlackIcon} alt="Slack logo" className="mr-2" />
+            Slack-Clone
           </Link>
+        </HeaderSideBar>
 
-          <MainSideBar>
-            {channels.map(channel => {
-              return (
-                <Link key={channel.id} to={`/channels/${channel.id}`}>
-                  <ButtonSideBar># {channel.name}</ButtonSideBar>
+        <CreateChannel setShouldChannel={setShouldChannel} />
+        <MainSideBar>
+          {data.channels.map(channel => {
+            return (
+              <ButtonSideBar key={channel.id}>
+                <Link
+                  className=" p-3 text-white d-block"
+                  key={channel.id}
+                  to={`/channels/${channel.id}/messages`}
+                >
+                  # {channel.name}
                 </Link>
-              );
-            })}
-            <CreateChannel/>
-          </MainSideBar>
+              </ButtonSideBar>
+            );
+          })}
+        </MainSideBar>
 
-          <FooterSideBar className="d-flex justify-content-center align-items-center">
-            footer
-          </FooterSideBar>
-        </SideBar>
+        <FooterSideBar className="d-flex justify-content-center align-items-center">
+          footer
+        </FooterSideBar>
+      </SideBar>
 
-        <div>
-          <Route exact path="/" component={Home} />
-          <Route path="/channels/:id" component={ChannelPage} />
-        </div>
-      </SplitPane>
-    </Router>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/channels/:id/messages" component={ChannelPage} />
+      </Switch>
+    </SplitPane>
   );
 };
 

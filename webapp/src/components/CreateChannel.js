@@ -1,29 +1,41 @@
 import React, { useState } from 'react';
 import { ButtonSideBar } from '../style/styled';
-const CreateChannel = () => {
+const CreateChannel = props => {
   const [formOpen, setFormOpen] = useState(false);
   let input;
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    fetch('/api/channels', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: input.value,
+      }),
+    })
+      .then(setFormOpen(false))
+      .then(props.setShouldChannel(true));
+  };
+
   return (
     <div>
       {!formOpen ? (
         <div onClick={() => setFormOpen(!formOpen)} className="text-white">
           <ButtonSideBar>
-            <i className="fas fa-plus-circle"></i> Add channel
+            <i className="p-3 fas fa-plus-circle"></i>Add channel
           </ButtonSideBar>
         </div>
       ) : (
-        <form
-          className="d-flex"
-          onSubmit={e => {
-            e.preventDefault();
-            console.log(`click from CreateChannel${input.value}`);
-            setFormOpen(!formOpen);
-          }}
-        >
+        <form className="d-flex" onSubmit={e => handleSubmit(e)}>
           <input
             ref={node => {
               input = node;
             }}
+            autoFocus
             className="form-control"
           />
 
