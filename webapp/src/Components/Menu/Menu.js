@@ -58,6 +58,7 @@ class Menu extends React.Component {
     const { channels } = await response.json();
     this.setState({ channels })
   }
+  
   componentDidMount() {
     this.getChannels()
   }

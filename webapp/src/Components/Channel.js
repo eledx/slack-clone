@@ -18,8 +18,8 @@ class Channel extends React.Component {
     const response = await fetch(`/api/channels/${this.props.channelId}/messages`);
     const { messages } = await response.json();
     this.setState({ messages, isLoading: false })
-    console.log('responses', messages)
   }
+  
   componentDidMount() {
     this.getMessages()
   }
