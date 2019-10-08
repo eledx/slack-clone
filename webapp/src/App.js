@@ -1,10 +1,6 @@
 import React from 'react';
-import SideBarNav from './components/SideBarNav';
+import WorkSpace from './components/WorkSpace';
 
 export default function App() {
-  return (
-    <div>
-      <SideBarNav />
-    </div>
-  );
+  return <WorkSpace/>;
 }
