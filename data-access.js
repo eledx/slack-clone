@@ -13,6 +13,25 @@ const getAllChannels = async () => {
   return channels.rows;
 };
 
+const getPublicChannels = async () => {
+  const channels = await pool.query(`
+    SELECT * FROM channel
+    WHERE is_public = 'true'
+  `);
+  return channels.rows;
+};
+
+const getUserPrivateChannels = async userId => {
+  const channels = await pool.query(`
+    SELECT id, name, is_public, created_at
+    FROM user_channel
+    INNER JOIN channel
+    ON user_channel.channel_id = channel.id
+    WHERE user_id = ${userId}
+  `);
+  return channels.rows;
+};
+
 const getChannelByName = async name => {
   const channel = await pool.query(
     `SELECT * FROM channel WHERE name = '${name}'`
@@ -22,7 +41,7 @@ const getChannelByName = async name => {
 
 const createChannel = name => {
   // For now, every new channel is public
-  // TODO: 
+  // TODO:
   // - on create, if user is logged in, assign channel to this user
   // - on create, define public/private status
   pool.query(`INSERT INTO channel (name, is_public) VALUES ('${name}','true')`);
@@ -47,6 +66,8 @@ const createMessage = (message, channelId) => {
 
 module.exports = {
   getAllChannels,
+  getPublicChannels,
+  getUserPrivateChannels,
   getChannelByName,
   createChannel,
   getMessagesList,
