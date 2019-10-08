@@ -7,6 +7,12 @@ import SearchBar from './SearchBar';
 import './SearchBar.css';
 import { Link, Route, Switch } from 'react-router-dom';
 import Channel from '../Channel'
+import { 
+  InputGroup, 
+  InputGroupAddon, 
+  Input, 
+  Button 
+} from 'reactstrap';
 
 
 class Menu extends React.Component {
@@ -31,6 +37,12 @@ class Menu extends React.Component {
     });
   };
 
+  // Fonction onClick du bouton d'ajout de channel
+  addChann = () => {
+    alert('Add new chan')
+  }
+
+  // Fonction qui récupère le nom des channels pour les passer en props au composant Channel
   getChanName (idChan) {
     let res = this.state.channels.map(chan => {
       if (chan.id === idChan) {
@@ -38,17 +50,13 @@ class Menu extends React.Component {
       }
     })
     return res
-    //console.log('name', name)
   }
 
+  // Fonction qui récupère les datas des channels
   async getChannels() {
-    //  await fetch('/api/channels')
-    //    .then(res => res.json())
-    //    .then(console.log('alors ?'));
     const response = await fetch('/api/channels');
     const { channels } = await response.json();
     this.setState({ channels })
-    console.log('responses', channels)
   }
   componentDidMount() {
     this.getChannels()
@@ -81,13 +89,14 @@ class Menu extends React.Component {
             <li>
               <a href="#">Accueil</a>
             </li>
-            <li onClick={this.toggleIsOpenDropDown}>
+            <li >
               <a
                 className={
                   this.state.isOpenDropDown
                     ? 'list-element-channels-open'
                     : 'list-element-channels'
                 }
+                onClick={this.toggleIsOpenDropDown}
                 href="#"
               >
                 Channels
@@ -99,6 +108,16 @@ class Menu extends React.Component {
                     : 'channels-list'
                 }
               >
+                <li>
+                  <InputGroup>
+                    <Input placeholder="Ajouter" type="text" />
+                    <InputGroupAddon addonType="append">
+                      <Button onClick={this.addChann}>
+                        Ok
+                      </Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </li>
                 {this.state.channels.map(channel => (
                   <li key={channel.id}>
                   <Link to={`/channels/${channel.id}/messages`}>
