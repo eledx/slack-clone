@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { ButtonSideBar } from '../style/styled';
+
 const CreateChannel = props => {
   const [formOpen, setFormOpen] = useState(false);
   let input;
 
-  const handleSubmit = event => {
-    event.preventDefault();
-
+  const handleSubmit = e => {
+    e.preventDefault();
     fetch('/api/channels', {
       method: 'POST',
       headers: {
@@ -18,7 +18,7 @@ const CreateChannel = props => {
       }),
     })
       .then(setFormOpen(false))
-      .then(props.setShouldChannel(true));
+      .then(props.setShouldRefetchChannel(true));
   };
 
   return (
@@ -38,7 +38,6 @@ const CreateChannel = props => {
             autoFocus
             className="form-control"
           />
-
           <span
             className="btn btn-danger"
             onClick={() => setFormOpen(!formOpen)}

@@ -1,15 +1,29 @@
 import React from 'react';
 
-const CreateMessage = () => {
+const CreateMessage = props => {
   let input;
+  
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    fetch('/api/messages', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: input.value,
+        channelId: props.channelId,
+      }),
+    })
+      .then((input.value = ''))
+      .then(props.setShouldRefetchMessages(true));
+  };
+
+
   return (
-    <form
-      className="input-group mb-3 p-3"
-      onSubmit={e => {
-        e.preventDefault();
-        console.log(`click from CreateMessage ${input.value}`);
-      }}
-    >
+    <form className="input-group mb-3 p-3" onSubmit={e => handleSubmit(e)}>
       <input
         ref={node => {
           input = node;

@@ -4,47 +4,60 @@ import {
   HeaderMessageList,
   FooterMessageList,
   MainMessageList,
+  MessageListEmpty,
 } from '../style/styled';
 import CreateMessage from './CreateMessage';
 import MessageItem from './MessageItem';
 import Spinner from './Spinner';
 
 const MessageList = props => {
-  const [data, setData] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const channelId = props.match.params.id;
+  const [shouldRefetchMessages, setShouldRefetchMessages] = useState(true);
+  const channel = props.currentChannel
 
   useEffect(() => {
-    fetch(`/api/messages`)
-      .then(res => {
-        return res.json();
-      })
+    fetch(`/api/channels/${channel.id}/messages`)
+      .then(res => res.json())
       .then(data => {
-        setData(data);
+        setMessages(data.messages);
         setLoading(false);
+        setShouldRefetchMessages(false);
       });
-  }, [channelId]);
+  }, [channel.id, shouldRefetchMessages]);
 
   return (
     <Container>
       <HeaderMessageList className="d-flex justify-content-between">
-        <p className="font-weight-bold p-3">#Channel {channelId}</p>
+        <p className="font-weight-bold p-3"># {channel.name}</p>
       </HeaderMessageList>
 
       <MainMessageList>
         {loading ? (
           <Spinner />
         ) : (
-          <div>
-            {data.map(message => {
-              return <MessageItem key={message.id} message={message} />;
-            })}
-          </div>
+          <>
+            {messages.length ? (
+              messages.map(message => {
+                return <MessageItem key={message.id} message={message} />;
+              })
+            ) : (
+              <MessageListEmpty>
+                Start a discussion
+                <span className="ml-2" role="img" aria-label="smile">
+                  😁
+                </span>
+              </MessageListEmpty>
+            )}
+          </>
         )}
       </MainMessageList>
 
       <FooterMessageList>
-        <CreateMessage />
+        <CreateMessage
+          channelId={channel.id}
+          setShouldRefetchMessages={setShouldRefetchMessages}
+        />
       </FooterMessageList>
     </Container>
   );

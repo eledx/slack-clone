@@ -18,6 +18,7 @@ exports.up = function(db) {
   return db.runSql(`CREATE TABLE channel(
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
+    is_public BOOLEAN,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   )`);
 };

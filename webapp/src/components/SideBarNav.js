@@ -3,10 +3,10 @@ import { Route, Link, Switch } from 'react-router-dom';
 import SlackIcon from '../img/slack.png';
 import SplitPane from 'react-split-pane';
 import Home from './Home';
-import ChannelPage from './MessageList';
+import MessageList from './MessageList';
 import CreateChannel from './CreateChannel';
 import Spinner from './Spinner';
-
+import { splitPaneStyles } from '../style/splitPaneStyles';
 import {
   SideBar,
   ButtonSideBar,
@@ -15,32 +15,20 @@ import {
   FooterSideBar,
 } from '../style/styled';
 
-const styles = {
-  background: '#000',
-  width: '2px',
-  cursor: 'col-resize',
-  height: '100%',
-};
-
 const SideBarNav = () => {
-  const [data, setData] = useState([]);
+  const [channels, setChannels] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [shouldChannel, setShouldChannel] = useState(false);
-
-  // TODO: voir si il est possible de stocker la requête
-  // et passer en parametre l'url le chargment et la data pour ne pas dupliquer
+  const [shouldRefetchChannel, setShouldRefetchChannel] = useState(false);
 
   useEffect(() => {
     fetch('/api/channels/')
-      .then(res => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then(data => {
-        setData(data);
+        setChannels(data.channels);
         setLoading(false);
-        setShouldChannel(false)
+        setShouldRefetchChannel(false);
       });
-  }, [shouldChannel]);
+  }, [shouldRefetchChannel]);
 
   return loading ? (
     <Spinner />
@@ -49,7 +37,7 @@ const SideBarNav = () => {
       split="vertical"
       minSize={150}
       defaultSize={220}
-      resizerStyle={styles}
+      resizerStyle={splitPaneStyles}
     >
       <SideBar>
         <HeaderSideBar className="d-flex justify-content-center align-items-center">
@@ -59,13 +47,14 @@ const SideBarNav = () => {
           </Link>
         </HeaderSideBar>
 
-        <CreateChannel setShouldChannel={setShouldChannel} />
+        <CreateChannel setShouldRefetchChannel={setShouldRefetchChannel} />
+
         <MainSideBar>
-          {data.channels.map(channel => {
+          {channels.map(channel => {
             return (
               <ButtonSideBar key={channel.id}>
                 <Link
-                  className=" p-3 text-white d-block"
+                  className="p-3 text-white d-block"
                   key={channel.id}
                   to={`/channels/${channel.id}/messages`}
                 >
@@ -81,9 +70,18 @@ const SideBarNav = () => {
         </FooterSideBar>
       </SideBar>
 
+      {/* TODO: Move switch into a separate file ? */}
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/channels/:id/messages" component={ChannelPage} />
+        <Route
+          path="/channels/:channelId/messages"
+          render={props => {
+            const currentChannel = channels.find(
+              ({ id }) => id.toString() === props.match.params.channelId
+            );
+            return <MessageList currentChannel={currentChannel} />;
+          }}
+        />
       </Switch>
     </SplitPane>
   );
