@@ -6,6 +6,22 @@ const createChannelAndGetId = async name => {
   return channel.id;
 };
 
+const getPublicChannels = async () => {
+  const channels = await dataAccess.getPublicChannels();
+  return channels;
+};
+
+const getUserChannels = async userId => {
+  const [publicChannels, privateChannels] = await Promise.all([
+    dataAccess.getPublicChannels(),
+    dataAccess.getUserPrivateChannels(userId),
+  ]);
+
+  return [...publicChannels, ...privateChannels];
+};
+
 module.exports = {
   createChannelAndGetId,
+  getPublicChannels,
+  getUserChannels,
 };
