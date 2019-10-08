@@ -8,14 +8,14 @@ router.get('/channels', (req, res) => {
   res.json({
     channels: [
       {
-        id: "abc",
-        name: "general",
+        id: 'abc',
+        name: 'general',
       },
       {
-        id: "def",
-        name: "random",
-      }
-    ]
+        id: 'def',
+        name: 'random',
+      },
+    ],
   });
 });
 
@@ -44,3 +44,9 @@ router.get('/channels/:channelId/messages', (req, res) => {
 });
 
 module.exports = router;
+// const router = express.Router();
+
+// router.get('/test', getChannels);
+// router.post('/test', createChannel);
+
+// module.exports = router;

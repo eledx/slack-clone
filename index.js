@@ -1,24 +1,22 @@
 const express = require('express');
 const app = express();
 const pool = require('./db_pool');
-const test = require('./data-access');
+const routes = require('./routes');
 require('dotenv').config();
 
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 // Middlewares
 app.use(morgan('dev'));
-app.use(cors({ origin: '*' }));
 // Body Parser configuration
 
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
-app.get('/', function(req, res) {
-  res.send('Hello W!');
-});
-app.use('/t', test);
+// app.get('/', function(req, res) {
+//   res.send('Hello W!');
+// });
+app.use('/api', routes);
 // app.get('/test', (req, res) => {
 //   pool.query('SELECT * FROM channel', (err, results) => {
 //     if (err)
