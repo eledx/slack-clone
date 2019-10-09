@@ -16,7 +16,7 @@ exports.setup = function(options, seedLink) {
 
 exports.up = function(db) {
   return db.runSql(`CREATE TABLE session(
-    session_id SERIAL PRIMARY KEY,
+    session_id TEXT PRIMARY KEY,
     user_id INTEGER
   )`);
 };
