@@ -1,14 +1,19 @@
-// const pg = require('pg');
-// const express = require('express');
-
-// const app = express();
-
-// const router = express.Router();
-const getChannels = async () => {
-  const channels = await pool.query('SELECT * FROM channel ORDER BY id ASC');
-  console.log(channels);
-  return channels;
-};
 const pool = require('./db_pool');
 
-module.exports = router;
+const getChannels = async () => {
+  const channels = await pool.query('SELECT * FROM channel ORDER BY id ASC');
+  console.log('channel DataAccess', channels);
+  return channels.rows;
+};
+
+const getMessages = async (channelId) => {
+  console.log("channelId", channelId)
+  const messages = await pool.query(`SELECT * FROM message WHERE id_chan = $1`,[channelId]);
+  console.log('channel DataAccess', messages);
+  return messages.rows;
+};
+
+module.exports = {
+  getChannels,
+  getMessages,
+};

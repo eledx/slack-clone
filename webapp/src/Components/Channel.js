@@ -21,6 +21,7 @@ class Channel extends React.Component {
   }
   
   componentDidMount() {
+    console.log('name', this.state.chanName)
     this.getMessages()
   }
 
