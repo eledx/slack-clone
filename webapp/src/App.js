@@ -4,12 +4,12 @@ import Menu from './Components/Menu/Menu.js';
 
 function App() {
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <Menu />
-    //   </header>
-    //   COUCOU
-    // </div>
+    <div className="App">
+      <header className="App-header">
+        <Menu />
+      </header>
+      COUCOU
+    </div>
   );
 }
 

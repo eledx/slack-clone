@@ -6,21 +6,15 @@ import './InfoHeader.css';
 import SearchBar from './SearchBar';
 import './SearchBar.css';
 import { Link, Route, Switch } from 'react-router-dom';
-import Channel from '../Channel'
-import { 
-  InputGroup, 
-  InputGroupAddon, 
-  Input, 
-  Button 
-} from 'reactstrap';
-
+import Channel from '../Channel';
+import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
 
 class Menu extends React.Component {
   // On créer un état qui (ici) est un booléen false pour le moment car un état doit changer par la suite
   state = {
     isOpenMenu: false,
     isOpenDropDown: false,
-    channels: []
+    channels: [],
   };
 
   // On créer une fonction fléchée qui aura pour objectif à son déclenchement de configuré l'état déclaré plus tôt
@@ -39,28 +33,28 @@ class Menu extends React.Component {
 
   // Fonction onClick du bouton d'ajout de channel
   addChann = () => {
-    alert('Add new chan')
-  }
+    alert('Add new chan');
+  };
 
   // Fonction qui récupère le nom des channels pour les passer en props au composant Channel
-  getChanName (idChan) {
-    let res = this.state.channels.map(chan => {
-      if (chan.id === idChan) {
-        return chan.name
+  getChanName = (idChan) => {
+    let res = this.state.channels.filter(chan => {
+      if (chan.id === parseInt(idChan)) {
+        return chan.name;
       }
-    })
-    return res
+    });
+    return res;
   }
 
   // Fonction qui récupère les datas des channels
   async getChannels() {
     const response = await fetch('/api/channels');
     const { channels } = await response.json();
-    this.setState({ channels })
+    this.setState({ channels });
   }
-  
+
   componentDidMount() {
-    this.getChannels()
+    this.getChannels();
   }
 
   render() {
@@ -81,16 +75,20 @@ class Menu extends React.Component {
           <ul
             className={
               this.state.isOpenMenu
-              ? 'left-navbar is-visible-in-mobile'
-              : 'left-navbar'
+                ? 'left-navbar is-visible-in-mobile'
+                : 'left-navbar'
             }
           >
-            <li><InfoHeader /></li>
-            <li><SearchBar/></li>
+            <li>
+              <InfoHeader />
+            </li>
+            <li>
+              <SearchBar />
+            </li>
             <li>
               <a href="#">Accueil</a>
             </li>
-            <li >
+            <li>
               <a
                 className={
                   this.state.isOpenDropDown
@@ -113,18 +111,16 @@ class Menu extends React.Component {
                   <InputGroup>
                     <Input placeholder="Ajouter" type="text" />
                     <InputGroupAddon addonType="append">
-                      <Button onClick={this.addChann}>
-                        Ok
-                      </Button>
+                      <Button onClick={this.addChann}>Ok</Button>
                     </InputGroupAddon>
                   </InputGroup>
                 </li>
                 {this.state.channels.map(channel => (
                   <li key={channel.id}>
-                  <Link to={`/channels/${channel.id}/messages`}>
-                    {channel.name}
-                  </Link>
-                </li>
+                    <Link to={`/channels/${channel.id}/messages`}>
+                      {channel.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </li>
@@ -138,7 +134,10 @@ class Menu extends React.Component {
           <Route
             path="/channels/:channelId/messages"
             render={props => (
-              <Channel channelId={props.match.params.channelId} chanName={this.getChanName(props.match.params.channelId)}/>
+              <Channel
+                channelId={props.match.params.channelId}
+                chanName={this.getChanName(props.match.params.channelId)}
+              />
             )}
           />
         </Switch>
