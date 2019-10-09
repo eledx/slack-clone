@@ -7,7 +7,7 @@ import SearchBar from './SearchBar';
 import './SearchBar.css';
 import { Link, Route, Switch } from 'react-router-dom';
 import Channel from '../Channel';
-import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Input, Button, Form } from 'reactstrap';
 
 class Menu extends React.Component {
   // On créer un état qui (ici) est un booléen false pour le moment car un état doit changer par la suite
@@ -15,6 +15,13 @@ class Menu extends React.Component {
     isOpenMenu: false,
     isOpenDropDown: false,
     channels: [],
+    nameChannels: '',
+    shouldRefreshChannels: false,
+  };
+  getNameChannels = e => {
+    this.setState({
+      nameChannels: [e.target.value],
+    });
   };
 
   // On créer une fonction fléchée qui aura pour objectif à son déclenchement de configuré l'état déclaré plus tôt
@@ -31,30 +38,41 @@ class Menu extends React.Component {
     });
   };
 
-  // Fonction onClick du bouton d'ajout de channel
-  addChann = () => {
-    alert('Add new chan');
-  };
-
   // Fonction qui récupère le nom des channels pour les passer en props au composant Channel
-  getChanName = (idChan) => {
-    let res = this.state.channels.filter(chan => {
+  getChanName = idChan => {
+    let res = this.state.channels.map(chan => {
       if (chan.id === parseInt(idChan)) {
         return chan.name;
       }
     });
     return res;
-  }
+  };
 
   // Fonction qui récupère les datas des channels
-  async getChannels() {
+  getChannels = async () => {
     const response = await fetch('/api/channels');
     const { channels } = await response.json();
     this.setState({ channels });
-  }
+  };
+
+  postChannels = () => {
+    fetch('/api/channels', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        nameChannels: this.state.nameChannels[0],
+      }),
+    });
+    this.setState({ shouldRefreshChannels: true, nameChannels: '' });
+  };
 
   componentDidMount() {
     this.getChannels();
+  }
+  componentDidUpdate() {
+    if (this.state.shouldRefreshChannels) {
+      this.getChannels();
+    }
   }
 
   render() {
@@ -108,12 +126,19 @@ class Menu extends React.Component {
                 }
               >
                 <li>
-                  <InputGroup>
-                    <Input placeholder="Ajouter" type="text" />
-                    <InputGroupAddon addonType="append">
-                      <Button onClick={this.addChann}>Ok</Button>
-                    </InputGroupAddon>
-                  </InputGroup>
+                  <Form onSubmit={this.postChannels}>
+                    <InputGroup>
+                      <Input
+                        placeholder="Ajouter"
+                        type="text"
+                        value={this.state.nameChannels}
+                        onChange={this.getNameChannels}
+                      />
+                      <InputGroupAddon addonType="append">
+                        <Button type="submit">Ok</Button>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Form>
                 </li>
                 {this.state.channels.map(channel => (
                   <li key={channel.id}>

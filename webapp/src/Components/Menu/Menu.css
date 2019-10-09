@@ -14,7 +14,7 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-li{
+li {
   list-style: none;
 }
 
@@ -32,8 +32,9 @@ li{
   background: #333;
   overflow: auto;
 }
-.left-navbar::-webkit-scrollbar { width: 0 }
-
+.left-navbar::-webkit-scrollbar {
+  width: 0;
+}
 
 .nav-bar a {
   padding: 8px 20px;
@@ -45,40 +46,40 @@ li{
   display: block;
 }
 
-.nav-bar a:hover, .nav-bar a:focus {
+.nav-bar a:hover,
+.nav-bar a:focus {
   background: #fff;
   color: #333;
 }
 
-
-.channels-list{
+.channels-list {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 2s;
+  transition: max-height 3s;
   color: #fff;
 }
-.channels-list-open li:hover, .channels-list-open li:focus {
+.channels-list-open li:hover,
+.channels-list-open li:focus {
   background: #fff;
   color: #333;
 }
-.channels-list-open li a{
+.channels-list-open li a {
   cursor: pointer;
 }
-.channels-list-open{
-  max-height: 50em;
+.channels-list-open {
+  max-height: 5000em;
   overflow: hidden;
-  transition: max-height 4s;
+  transition: max-height 30s;
   color: #fff;
 }
-.list-element-channels:after{
-  content: "►";
+.list-element-channels:after {
+  content: '►';
   float: right;
 }
-.list-element-channels-open:after{
-  content: "▼";
+.list-element-channels-open:after {
+  content: '▼';
   float: right;
 }
-
 
 /* Burger-menu */
 .burger_button {
