@@ -17,8 +17,16 @@ const postChannels = nameChannels => {
   pool.query(`INSERT INTO channel (name) VALUES ($1)`, [nameChannels]);
 };
 
+const postMessages = (channelId, contentMessages) => {
+  pool.query(`INSERT INTO message (id_chan, content) VALUES ($1, $2)`, [
+    channelId,
+    contentMessages,
+  ]);
+};
+
 module.exports = {
   getChannels,
   getMessages,
   postChannels,
+  postMessages,
 };

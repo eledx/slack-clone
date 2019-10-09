@@ -44,4 +44,6 @@ router.get('/channels', controllers.getChannels);
 
 router.post('/channels', controllers.postChannels);
 
+router.post('/channels/:channelId/messages', controllers.postMessages);
+
 module.exports = router;

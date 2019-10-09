@@ -15,11 +15,19 @@ const getMessages = async (req, res) => {
 const postChannels = (req, res) => {
   const nameChannels = req.body.nameChannels;
   dataAccess.postChannels(nameChannels);
-  return res.send('Bravo !');
+  return res.send('channel posté');
+};
+
+const postMessages = (req, res) => {
+  const contentMessages = req.body.contentMessages;
+  const channelId = req.params.channelId;
+  dataAccess.postMessages(channelId, contentMessages);
+  return res.send('message posté');
 };
 
 module.exports = {
   getChannels,
   getMessages,
   postChannels,
+  postMessages,
 };
