@@ -13,7 +13,6 @@ class Menu extends React.Component {
   // On créer un état qui (ici) est un booléen false pour le moment car un état doit changer par la suite
   state = {
     isOpenMenu: false,
-    isOpenDropDown: false,
     channels: [],
     nameChannels: '',
     shouldRefreshChannels: false,
@@ -29,11 +28,6 @@ class Menu extends React.Component {
     this.setState({
       // On configure l'état isOpen pour qu'il passe de false à true et de true à false. On fait de lui un toggle
       isOpenMenu: !this.state.isOpenMenu,
-      isOpenDropDown: !this.state.isOpenDropDown,
-    });
-  };
-  toggleIsOpenDropDown = () => {
-    this.setState({
       isOpenDropDown: !this.state.isOpenDropDown,
     });
   };
@@ -97,45 +91,28 @@ class Menu extends React.Component {
                 : 'left-navbar'
             }
           >
-            <li>
+            <li className="low-vertical-padding">
               <InfoHeader />
             </li>
-            <li>
+            <li className="low-vertical-padding">
               <SearchBar />
             </li>
-            <li>
-              <a href="#">Accueil</a>
+            <li className="low-vertical-padding">
+              <a href="#">Home</a>
             </li>
             <li>
-              <a
-                className={
-                  this.state.isOpenDropDown
-                    ? 'list-element-channels-open'
-                    : 'list-element-channels'
-                }
-                onClick={this.toggleIsOpenDropDown}
-                href="#"
-              >
-                Channels
-              </a>
-              <ul
-                className={
-                  this.state.isOpenDropDown
-                    ? 'channels-list-open'
-                    : 'channels-list'
-                }
-              >
+              <ul>
                 <li>
-                  <Form onSubmit={this.postChannels}>
+                  <Form className="low-vertical-padding create-channel-form" onSubmit={this.postChannels}>
                     <InputGroup>
-                      <Input
-                        placeholder="Ajouter"
+                      <Input className="global-input"
+                        placeholder="Create channel"
                         type="text"
                         value={this.state.nameChannels}
                         onChange={this.getNameChannels}
                       />
                       <InputGroupAddon addonType="append">
-                        <Button type="submit">Ok</Button>
+                        <Button className="submit-button" type="submit">Create</Button>
                       </InputGroupAddon>
                     </InputGroup>
                   </Form>

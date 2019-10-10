@@ -1,6 +1,7 @@
 import React from 'react';
 import Message from './Message.js';
 import { InputGroup, InputGroupAddon, Input, Button, Form } from 'reactstrap';
+import './Channel.css';
 
 class Channel extends React.Component {
   state = {
@@ -72,22 +73,27 @@ class Channel extends React.Component {
       return <div>Loading…</div>;
     }
     return (
-      <div>
-        <h1>{this.state.chanName}</h1>
-        {this.state.messages.map(message => {
-          return <Message key={message.id} content={message.content} />;
-        })}
-        <Form onSubmit={this.postMessages}>
+      <div className="thread">
+        <div className="top-bar-channel-name">
+          <h2>{this.state.chanName}</h2>
+        </div>
+        <div className="all-messages">
+          {this.state.messages.map(message => {
+            return <Message key={message.id} content={message.content} />;
+          })}
+        </div>
+        <Form className="post-message-input" onSubmit={this.postMessages}>
           <InputGroup>
             <Input
-              placeholder="..."
+            className="global-input"
+              placeholder="Write a message"
               type="text"
               value={this.state.messageContent}
               onChange={this.getMessagesContent}
             />
             <InputGroupAddon addonType="append">
-              <Button className="btn btn-success" type="submit">
-                Ok
+              <Button className="btn submit-button" type="submit">
+                Send
               </Button>
             </InputGroupAddon>
           </InputGroup>

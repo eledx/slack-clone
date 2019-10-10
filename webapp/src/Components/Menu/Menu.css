@@ -13,20 +13,45 @@ body {
   line-height: 1.5;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
+h1 {
+  font-size: 24px;
+}
+ul {
+  padding: 0;
+  margin: 0;
+}
 li {
   list-style: none;
 }
-
+.low-vertical-padding {
+  padding: 5px 0px;
+}
+.btn {
+  padding: 5px;
+}
+.global-input { 
+  appearance: none;
+  background: #444;
+  border: solid 1px #fff;
+  border-radius: 10px;
+  text-indent: 5px;
+  color: #666;
+}
+.global-input:focus {
+  background: #444;
+  color: #fff;
+  border: solid 2px #fff;
+  outline: none;
+}
 .nav-bar {
-  float: left;
+  position: fixed;
+  z-index: 2000;
 }
 
 .nav-bar .left-navbar {
   padding: 0;
   margin: 0;
   list-style: none;
-  overflow: hidden;
   height: 100vh;
   width: 20vw;
   background: #333;
@@ -53,9 +78,8 @@ li {
 }
 
 .channels-list {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 3s;
+  padding: 0;
+  margin: 0;
   color: #fff;
 }
 .channels-list-open li:hover,
@@ -66,19 +90,15 @@ li {
 .channels-list-open li a {
   cursor: pointer;
 }
-.channels-list-open {
-  max-height: 5000em;
-  overflow: hidden;
-  transition: max-height 30s;
-  color: #fff;
+.create-channel-form {
+  width: 95%;
+  margin: auto;
 }
-.list-element-channels:after {
-  content: '►';
-  float: right;
+.submit-button {
+  background-color: #444;
 }
-.list-element-channels-open:after {
-  content: '▼';
-  float: right;
+.create-channel-button:hover {
+  background-color: #555;
 }
 
 /* Burger-menu */
@@ -125,7 +145,8 @@ li {
   .nav-bar {
     background: #333;
     padding: 5px;
-    float: none;
+    position: fixed;
+    width: 100vw
   }
   .nav-bar a {
     margin: 0;
