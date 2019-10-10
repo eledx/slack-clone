@@ -10,7 +10,6 @@ class Channel extends React.Component {
     messages: [],
     messageContent: '',
     shouldRefetchMessages: false,
-    shouldRefreshMessages: false,
   };
 
   getMessagesContent = e => {
@@ -41,7 +40,7 @@ class Channel extends React.Component {
       }),
     });
     e.preventDefault();
-    this.setState({ shouldRefreshMessages: true, messageContent: '' });
+    this.setState({ shouldRefetchMessages: true, messageContent: '' });
   };
 
   componentDidMount() {
@@ -62,9 +61,8 @@ class Channel extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.shouldRefreshMessages) {
-      this.setState({ shouldRefreshMessages: false });
-      alert('didUpdate');
+    if (this.state.shouldRefetchMessages) {
+      this.setState({ shouldRefetchMessages: false });
       this.getMessages();
     }
   }
