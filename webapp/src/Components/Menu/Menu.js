@@ -60,6 +60,14 @@ class Menu extends React.Component {
     this.setState({ shouldRefreshChannels: true, nameChannels: '' });
   };
 
+  deleteChannels = channelId => {
+    fetch(`/api/channels/:${channelId}/`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'DELETE',
+    });
+    console.log(channelId);
+  };
+
   componentDidMount() {
     this.getChannels();
   }
@@ -122,6 +130,7 @@ class Menu extends React.Component {
                     <Link to={`/channels/${channel.id}/messages`}>
                       {channel.name}
                     </Link>
+                    <div onClick={this.deleteChannels}>X</div>
                   </li>
                 ))}
               </ul>
