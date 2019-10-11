@@ -42,6 +42,7 @@
   }
   .top-bar-channel-name {
     padding-top: 37px;
+    max-height: initial;
   }
   .all-messages {
     padding: 10px;
