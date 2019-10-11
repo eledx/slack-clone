@@ -26,7 +26,7 @@ const SearchBar = () => {
             <div className="modal-content modal-search-channel">
               <form className="search-form">
                 <input
-                  className="channel-search-input"
+                  className="channel-search-input global-input"
                   type="search"
                   placeholder="Search your channel..."
                 ></input>

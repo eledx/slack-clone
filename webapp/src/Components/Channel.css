@@ -1,0 +1,52 @@
+.thread {
+  left: 20vw;
+  position: fixed;
+  height: 100vh;
+  width: 80vw;
+  background: #555;
+  color: #fff;
+}
+.top-bar-channel-name {
+  background: #444;
+  padding-left: 20px;
+  max-height: 10vh;
+}
+.top-bar-channel-name h2 {
+  color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  padding: 10px;
+  margin: 0;
+}
+.all-messages {
+  padding: 10px;
+  max-height: calc(100vh - 14vh);
+  overflow: auto;
+}
+
+.post-message-input {
+  max-height: 13vh;
+  background: #444;
+  padding: 15px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+
+@media all and (max-width: 768px) {
+  .thread {
+    position: initial;
+    height: calc(100vh - 37px);
+    width: auto;
+  }
+  .top-bar-channel-name {
+    padding-top: 37px;
+    max-height: initial;
+  }
+  .all-messages {
+    padding: 10px;
+    max-height: calc(100vh - 14vh - 30px);
+    overflow: auto;
+  }
+}
