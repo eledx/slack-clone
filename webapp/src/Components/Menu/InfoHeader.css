@@ -2,9 +2,10 @@
     color: #fff;
 }
 /* Logo */
-.logoSlack {
-  width: 30px;
-  height: 30px;
+.logo {
+  width: 100%;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1) rotate(180deg);
 }
 .server-title {
   margin: 0;

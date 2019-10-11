@@ -76,6 +76,12 @@ li {
   background: #fff;
   color: #333;
 }
+.no-hover div a{
+  padding:0;
+  }
+.no-hover div a:hover{
+background-color: transparent;
+}
 
 .channels-list {
   padding: 0;

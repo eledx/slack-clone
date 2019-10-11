@@ -20,7 +20,7 @@
 }
 .all-messages {
   padding: 10px;
-  max-height: calc(100vh - 14vh);
+  max-height: calc(100vh - 19vh);
   overflow: auto;
 }
 

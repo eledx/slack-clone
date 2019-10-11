@@ -101,8 +101,8 @@ class Menu extends React.Component {
                 : 'left-navbar'
             }
           >
-            <li className="low-vertical-padding">
-              <InfoHeader />
+            <li className="no-hover low-vertical-padding">
+              <InfoHeader className="infoHeader" />
             </li>
             <li className="low-vertical-padding">
               <SearchBar />
