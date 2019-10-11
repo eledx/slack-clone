@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const controllers = require('./controllers');
 
+// router GET
 router.get('/channels/:channelId/messages', controllers.getMessages);
 // router.get('/channels/:channelId/messages', (req, res) => {
 //   console.log(req.params.channelId);
@@ -42,8 +43,12 @@ router.get('/channels', controllers.getChannels);
 //   });
 // });
 
+// router POST
 router.post('/channels', controllers.postChannels);
 
 router.post('/channels/:channelId/messages', controllers.postMessages);
+
+// router DELETE
+router.delete('/channels/:channelId', controllers.deleteChannels);
 
 module.exports = router;

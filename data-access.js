@@ -24,9 +24,14 @@ const postMessages = (channelId, contentMessages) => {
   ]);
 };
 
+const deleteChannels = channelId => {
+  pool.query(`DELETE FROM channel WHERE id = $1`, [channelId]);
+};
+
 module.exports = {
   getChannels,
   getMessages,
   postChannels,
   postMessages,
+  deleteChannels,
 };

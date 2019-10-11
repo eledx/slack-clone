@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var dbm;
 var type;
@@ -23,9 +23,9 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  return null;
+  return db.runSql(`DROP TABLE channel`);
 };
 
 exports._meta = {
-  version: 1
+  version: 1,
 };
