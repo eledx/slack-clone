@@ -1,6 +1,7 @@
 import React from 'react';
 import Message from './Message.js';
 import { InputGroup, InputGroupAddon, Input, Button, Form } from 'reactstrap';
+import { Thread,  } from "./StyledComponents/Channel.style";
 import './Channel.css';
 
 class Channel extends React.Component {
@@ -73,7 +74,7 @@ class Channel extends React.Component {
       return <div>Loading…</div>;
     }
     return (
-      <div className="thread">
+      <Thread>
         <div className="top-bar-channel-name">
           <h2>{this.state.chanName}</h2>
         </div>
@@ -98,7 +99,7 @@ class Channel extends React.Component {
             </InputGroupAddon>
           </InputGroup>
         </Form>
-      </div>
+      </Thread>
     );
   }
 }
