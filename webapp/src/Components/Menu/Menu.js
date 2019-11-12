@@ -44,7 +44,7 @@ class Menu extends React.Component {
   getChannels = async () => {
     const response = await fetch('/api/channels');
     const { channels } = await response.json();
-    this.setState({ channels });
+    this.setState({ channels, shouldRefreshChannels: false });
   };
 
   postChannels = e => {
