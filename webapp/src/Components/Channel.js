@@ -1,9 +1,8 @@
 import React from 'react';
 import Message from './Message.js';
-import { InputGroup, InputGroupAddon, Input, Button, Form } from 'reactstrap';
-import { Thread,  } from "./StyledComponents/Channel.style";
-import './Channel.css';
-
+import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
+import { Thread, TopBarChannelName, ChannelName, AllMessages, PostMessageInput } from "./StyledComponents/Channel.style";
+import { GlobalInput } from "./StyledComponents/Menu.style";
 class Channel extends React.Component {
   state = {
     chanName: this.props.chanName,
@@ -75,18 +74,17 @@ class Channel extends React.Component {
     }
     return (
       <Thread>
-        <div className="top-bar-channel-name">
-          <h2>{this.state.chanName}</h2>
-        </div>
-        <div className="all-messages">
+        <TopBarChannelName>
+          <ChannelName>{this.state.chanName}</ChannelName>
+        </TopBarChannelName>
+        <AllMessages>
           {this.state.messages.map(message => {
             return <Message key={message.id} content={message.content} />;
           })}
-        </div>
-        <Form className="post-message-input" onSubmit={this.postMessages}>
+        </AllMessages>
+        <PostMessageInput onSubmit={this.postMessages}>
           <InputGroup>
-            <Input
-            className="global-input"
+            <GlobalInput
               placeholder="Write a message"
               type="text"
               value={this.state.messageContent}
@@ -98,7 +96,7 @@ class Channel extends React.Component {
               </Button>
             </InputGroupAddon>
           </InputGroup>
-        </Form>
+        </PostMessageInput>
       </Thread>
     );
   }

@@ -1,16 +1,23 @@
 import React from 'react';
-import './Menu.css'
+import {
+  UserName,
+  UserStatus,
+  WebsiteName,
+} from '../StyledComponents/InfoHeader.style';
 import logo from './coucou.png';
 
 const InfoHeader = () => {
   return (
     <div>
-        <a > <img className="logo" alt="Home" src={logo} /> </a>
+      <WebsiteName>
+        Slack-clone
+        {/* <Logo alt="Home" src={logo} /> */}
+      </WebsiteName>
 
-        <div>
-            <span className="user-status">•</span>
-        <p className="username color_white">Nom de l'utilisateur</p>
-        </div>
+      <div>
+        <UserStatus>•</UserStatus>
+        <UserName>Nom de l'utilisateur</UserName>
+      </div>
     </div>
   );
 };
