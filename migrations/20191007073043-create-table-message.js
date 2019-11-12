@@ -5,9 +5,9 @@ var type;
 var seed;
 
 /**
-  * We receive the dbmigrate dependency from dbmigrate initially.
-  * This enables us to not have to rely on NODE_PATH.
-  */
+ * We receive the dbmigrate dependency from dbmigrate initially.
+ * This enables us to not have to rely on NODE_PATH.
+ */
 exports.setup = function(options, seedLink) {
   dbm = options.dbmigrate;
   type = dbm.dataType;
@@ -17,16 +17,17 @@ exports.setup = function(options, seedLink) {
 exports.up = function(db) {
   return db.runSql(`CREATE TABLE message(
     id SERIAL PRIMARY KEY,
-    id_chan INT references channel(id),
+    id_chan INT references channel(id)
+    ON DELETE CASCADE,
     content TEXT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
   )`);
 };
 
 exports.down = function(db) {
-  return null;
+  return db.runSql(`DROP TABLE message`);
 };
 
 exports._meta = {
-  "version": 1
+  version: 1,
 };

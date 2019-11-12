@@ -16,6 +16,7 @@ class Menu extends React.Component {
     channels: [],
     nameChannels: '',
     shouldRefreshChannels: false,
+    channelId: '',
   };
   getNameChannels = e => {
     this.setState({
@@ -49,7 +50,7 @@ class Menu extends React.Component {
     this.setState({ channels });
   };
 
-  postChannels = () => {
+  postChannels = e => {
     fetch('/api/channels', {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -57,7 +58,16 @@ class Menu extends React.Component {
         nameChannels: this.state.nameChannels[0],
       }),
     });
+    e.preventDefault();
     this.setState({ shouldRefreshChannels: true, nameChannels: '' });
+  };
+
+  deleteChannels = channelId => {
+    fetch(`/api/channels/${channelId}/`, {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'DELETE',
+    });
+    this.setState({ shouldRefreshChannels: true });
   };
 
   componentDidMount() {
@@ -103,16 +113,22 @@ class Menu extends React.Component {
             <li>
               <ul>
                 <li>
-                  <Form className="low-vertical-padding create-channel-form" onSubmit={this.postChannels}>
+                  <Form
+                    className="low-vertical-padding create-channel-form"
+                    onSubmit={this.postChannels}
+                  >
                     <InputGroup>
-                      <Input className="global-input"
+                      <Input
+                        className="global-input"
                         placeholder="Create channel"
                         type="text"
                         value={this.state.nameChannels}
                         onChange={this.getNameChannels}
                       />
                       <InputGroupAddon addonType="append">
-                        <Button className="submit-button" type="submit">Create</Button>
+                        <Button className="submit-button" type="submit">
+                          Create
+                        </Button>
                       </InputGroupAddon>
                     </InputGroup>
                   </Form>
@@ -122,6 +138,7 @@ class Menu extends React.Component {
                     <Link to={`/channels/${channel.id}/messages`}>
                       {channel.name}
                     </Link>
+                    <div onClick={() => this.deleteChannels(channel.id)}>X</div>
                   </li>
                 ))}
               </ul>
