@@ -66,8 +66,8 @@ const createMessage = (message, channelId) => {
   // For now, every new message is linked to first app_user (id = 1)
   // TODO: on create, assign message to a user or define it as an anonymous message
   pool.query(
-    `INSERT INTO message (text,channel_id, user_id) VALUES ($1, $2, 1)`,
-    [message, channelId]
+    `INSERT INTO message (text, channel_id, user_id) VALUES ($1, $2, $3)`,
+    [message, channelId, 1]
   );
 };
 
