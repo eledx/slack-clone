@@ -1,19 +1,18 @@
 import React from 'react';
-import './Menu.css';
+import { SearchChannelBloc, ButtonSearchChannel, ModalContainer, ModalSearchChannel, SearchForm, ChannelSearchInput, SearchChannelList, SearchChannelListElements, ShortcutsList, ShortcutsListElements } from "../StyledComponents/SearchBar.style";
 
 const SearchBar = () => {
   return (
     <div>
-      <div className="search-channel-bloc">
-        <button
-          className="button-search-channel"
+      <SearchChannelBloc>
+        <ButtonSearchChannel
           type="button"
           data-toggle="modal"
           data-target=".search-modal"
         >
           Search your channel{' '}
-        </button>
-      </div>
+        </ButtonSearchChannel>
+      </SearchChannelBloc>
       <div>
         <div
           className="modal fade search-modal"
@@ -22,31 +21,31 @@ const SearchBar = () => {
           aria-labelledby="myLargeModalLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content modal-search-channel">
-              <form className="search-form">
-                <input
-                  className="channel-search-input global-input"
+          <ModalContainer className="modal-dialog modal-lg">
+            <ModalSearchChannel className="modal-content ">
+              <SearchForm>
+                <ChannelSearchInput
+                  className="global-input"
                   type="search"
                   placeholder="Search your channel..."
-                ></input>
-              </form>
+                ></ChannelSearchInput>
+              </SearchForm>
               <div>
-                <ul className="search-channel-list">
-                  <li>Un premier channel</li>
-                  <li>Un second channel</li>
-                  <li>Un troisième channel</li>
-                </ul>
+                <SearchChannelList>
+                  <SearchChannelListElements>Un premier channel</SearchChannelListElements>
+                  <SearchChannelListElements>Un second channel</SearchChannelListElements>
+                  <SearchChannelListElements>Un troisième channel</SearchChannelListElements>
+                </SearchChannelList>
               </div>
               <div>
-                <ul className="shortcuts-list">
-                  <li>Un premier raccourci</li>
-                  <li>Un second raccourci</li>
-                  <li>Un troisième raccourci</li>
-                </ul>
+                <ShortcutsList>
+                  <ShortcutsListElements>Un premier raccourci</ShortcutsListElements>
+                  <ShortcutsListElements>Un second raccourci</ShortcutsListElements>
+                  <ShortcutsListElements>Un troisième raccourci</ShortcutsListElements>
+                </ShortcutsList>
               </div>
-            </div>
-          </div>
+            </ModalSearchChannel>
+          </ModalContainer>
         </div>
       </div>
     </div>

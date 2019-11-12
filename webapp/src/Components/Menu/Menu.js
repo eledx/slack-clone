@@ -1,12 +1,10 @@
 import React from 'react';
-import './Menu.css';
 import BurgerButton from './BurgerButton';
 import InfoHeader from './InfoHeader';
-import './InfoHeader.css';
 import SearchBar from './SearchBar';
-import './SearchBar.css';
-import { Link, Route, Switch } from 'react-router-dom';
 import Channel from '../Channel';
+import { Link, Route, Switch } from 'react-router-dom';
+import { MenuListElements, CreateChannelForm, GlobalInput, LeftNavbar, Navbar, RouteLink, NavbarLinks  } from "../StyledComponents/Menu.style";
 import { InputGroup, InputGroupAddon, Input, Button, Form } from 'reactstrap';
 
 class Menu extends React.Component {
@@ -29,7 +27,6 @@ class Menu extends React.Component {
     this.setState({
       // On configure l'état isOpen pour qu'il passe de false à true et de true à false. On fait de lui un toggle
       isOpenMenu: !this.state.isOpenMenu,
-      isOpenDropDown: !this.state.isOpenDropDown,
     });
   };
 
@@ -47,7 +44,7 @@ class Menu extends React.Component {
   getChannels = async () => {
     const response = await fetch('/api/channels');
     const { channels } = await response.json();
-    this.setState({ channels });
+    this.setState({ channels, shouldRefreshChannels: false });
   };
 
   postChannels = e => {
@@ -82,44 +79,35 @@ class Menu extends React.Component {
   render() {
     //   On créer une constante burgerButton qui vérifie si isOpenMenu est il est égal à true (on set la classe de la balise à 'burger_button open_burger' ) ou si égal à false (on set la classe de la balise à 'burger_button' )
     const burgerButton = this.state.isOpenMenu
-      ? 'burger_button open_burger'
-      : 'burger_button';
 
     return (
       <div>
-        <nav role="navigation" className="nav-bar">
+        <Navbar role="navigation">
           {/* On appel le composant BurgerButton et on lui fais passer en paramètre la fonction toggleIsOpenMenu et burgerButton */}
           <BurgerButton
             fonction={this.toggleIsOpenMenu}
             burgerButton={burgerButton}
+            
           />
           {/* si isOpenMenu est égal à true on set la classe à 'is-visible-in-mobile' */}
-          <ul
-            className={
-              this.state.isOpenMenu
-                ? 'left-navbar is-visible-in-mobile'
-                : 'left-navbar'
-            }
+          <LeftNavbar
+            isOpenMenu={this.state.isOpenMenu}
           >
-            <li className="low-vertical-padding">
-              <InfoHeader />
-            </li>
-            <li className="low-vertical-padding">
+            <MenuListElements>
+              <InfoHeader/>
+            </MenuListElements>
+            <MenuListElements>
               <SearchBar />
-            </li>
-            <li className="low-vertical-padding">
-              <a href="#">Home</a>
-            </li>
-            <li>
+            </MenuListElements>
+            <MenuListElements>
+              <NavbarLinks href="#">Home</NavbarLinks>
+            </MenuListElements>
+            <MenuListElements>
               <ul>
                 <li>
-                  <Form
-                    className="low-vertical-padding create-channel-form"
-                    onSubmit={this.postChannels}
-                  >
+                  <CreateChannelForm onSubmit={this.postChannels}>
                     <InputGroup>
-                      <Input
-                        className="global-input"
+                      <GlobalInput
                         placeholder="Create channel"
                         type="text"
                         value={this.state.nameChannels}
@@ -131,24 +119,24 @@ class Menu extends React.Component {
                         </Button>
                       </InputGroupAddon>
                     </InputGroup>
-                  </Form>
+                  </CreateChannelForm>
                 </li>
                 {this.state.channels.map(channel => (
                   <li key={channel.id}>
-                    <Link to={`/channels/${channel.id}/messages`}>
+                    <RouteLink to={`/channels/${channel.id}/messages`}>
                       {channel.name}
-                    </Link>
+                    </RouteLink>
                     <div onClick={() => this.deleteChannels(channel.id)}>X</div>
                   </li>
                 ))}
               </ul>
-            </li>
+            </MenuListElements>
 
-            <li>
-              <a href="#">Private messages</a>
-            </li>
-          </ul>
-        </nav>
+            <MenuListElements>
+              <NavbarLinks href="#">Private messages</NavbarLinks>
+            </MenuListElements>
+          </LeftNavbar>
+        </Navbar>
         <Switch>
           <Route
             path="/channels/:channelId/messages"
