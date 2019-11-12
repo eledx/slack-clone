@@ -22,20 +22,23 @@ const getPublicChannels = async () => {
 };
 
 const getUserPrivateChannels = async userId => {
-  const channels = await pool.query(`
+  const channels = await pool.query(
+    `
     SELECT id, name, is_public, created_at
     FROM user_channel
     INNER JOIN channel
     ON user_channel.channel_id = channel.id
-    WHERE user_id = ${userId}
-  `);
+    WHERE user_id = $1
+  `,
+    [userId]
+  );
   return channels.rows;
 };
 
 const getChannelByName = async name => {
-  const channel = await pool.query(
-    `SELECT * FROM channel WHERE name = '${name}'`
-  );
+  const channel = await pool.query(`SELECT * FROM channel WHERE name = $1`, [
+    name,
+  ]);
   return channel.rows[0];
 };
 
@@ -44,14 +47,17 @@ const createChannel = name => {
   // TODO:
   // - on create, if user is logged in, assign channel to this user
   // - on create, define public/private status
-  pool.query(`INSERT INTO channel (name, is_public) VALUES ('${name}','true')`);
+  pool.query(`INSERT INTO channel (name, is_public) VALUES ($1,'true')`, [
+    name,
+  ]);
 };
 
 // MESSAGES
 
 const getMessagesList = async channelId => {
   const messages = await pool.query(
-    `SELECT * FROM message WHERE channel_id=${channelId} `
+    `SELECT * FROM message WHERE channel_id = $1`,
+    [channelId]
   );
   return messages.rows;
 };
@@ -60,7 +66,8 @@ const createMessage = (message, channelId) => {
   // For now, every new message is linked to first app_user (id = 1)
   // TODO: on create, assign message to a user or define it as an anonymous message
   pool.query(
-    `INSERT INTO message (text,channel_id, user_id) VALUES ('${message}', '${channelId}', 1)`
+    `INSERT INTO message (text,channel_id, user_id) VALUES ($1, $2, 1)`,
+    [message, channelId]
   );
 };
 
