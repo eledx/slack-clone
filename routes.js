@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 //       - delete controller.getAllChannels
 router.get('/channels', controller.getAllChannels);
 
+//TODO: same path for public and private ('public' param)
 // Get channels for anonymous users
 router.get('/channels2', controller.getPublicChannels);
 // Get channels for logged-in users

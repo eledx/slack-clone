@@ -11,6 +11,7 @@ const getPublicChannels = async () => {
   return channels;
 };
 
+// TODO: do this with a single SQL query
 const getUserChannels = async userId => {
   const [publicChannels, privateChannels] = await Promise.all([
     dataAccess.getPublicChannels(),

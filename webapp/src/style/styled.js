@@ -65,7 +65,7 @@ export const MessageListEmpty = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size:25px;
+  font-size: 25px;
 `;
 
 // #endregion
@@ -74,3 +74,4 @@ export const Container = styled.div`
   height: 100vh;
 `;
 
+// TODO: one file per component
