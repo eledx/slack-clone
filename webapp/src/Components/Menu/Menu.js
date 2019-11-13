@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { InputGroup, InputGroupAddon, Input, Button } from 'reactstrap';
+import { InputGroup, InputGroupAddon, Button } from 'reactstrap';
 import BurgerButton from './BurgerButton';
 import InfoHeader from './InfoHeader';
 import SearchBar from './SearchBar';
